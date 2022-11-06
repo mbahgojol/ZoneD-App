@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "650344551163",
+    "project_id": "sad-app-365611",
+    "storage_bucket": "sad-app-365611.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650344551163:android:7349a8baed95a3737bd65e",
+        "android_client_info": {
+          "package_name": "com.example.zoned"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650344551163-l0nmq76pn7plemr5au7olbe2omlobvic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV_P9ZlIm3Sdj8aW_NbK6LMaDu6jm_unM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650344551163-l0nmq76pn7plemr5au7olbe2omlobvic.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
