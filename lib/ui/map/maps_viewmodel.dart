@@ -8,6 +8,14 @@ class MapsViewModel with ChangeNotifier {
   Completer<GoogleMapController> controller = Completer();
   Position? position;
 
+  Set<Circle> getCircles(){
+    return {Circle(
+      circleId: const CircleId(""),
+      center: LatLng(position?.latitude??0, position?.longitude??0),
+      radius: 4000,
+    )};
+  }
+
   CameraPosition initialLocation() {
     return CameraPosition(
       target: LatLng(position?.latitude ?? 37.42796133580664,
@@ -19,11 +27,11 @@ class MapsViewModel with ChangeNotifier {
   Future<void> _goToMyLocation() async {
     var position = await _determinePosition();
     this.position = position;
+    notifyListeners();
     final GoogleMapController controller = await this.controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        bearing: 192.8334901395799,
         target: LatLng(position.latitude, position.longitude),
-        zoom: 19.151926040649414)));
+        zoom: 14.4746,)));
   }
 
   MapsViewModel() {
