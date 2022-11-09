@@ -6,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zoned/data/model/FeedModel.dart';
 
-import '../../ui/home/item_view.dart';
-
 class FirebaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -22,7 +20,8 @@ class FirebaseService {
     return now.toString();
   }
 
-  StreamBuilder<QuerySnapshot> getFeedsRealtime() =>
+  StreamBuilder<QuerySnapshot> getFeedsRealtime(
+          Function(AsyncSnapshot<QuerySnapshot<Object?>>) showlist) =>
       StreamBuilder<QuerySnapshot>(
         stream: _collectionStream,
         builder: (context, snapshot) {
@@ -36,14 +35,7 @@ class FirebaseService {
 
           return !snapshot.hasData
               ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemCount: snapshot.data?.docs.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot data =
-                        snapshot.data?.docs[index] as DocumentSnapshot<Object?>;
-                    return ItemView(model: FeedModel.fromJson(data));
-                  },
-                );
+              : showlist(snapshot);
         },
       );
 

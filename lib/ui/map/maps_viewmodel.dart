@@ -3,39 +3,45 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:zoned/data/model/FeedModel.dart';
+
+import '../../data/remote/firebase_service.dart';
+import '../../utils/result_state.dart';
 
 class MapsViewModel with ChangeNotifier {
   Completer<GoogleMapController> controller = Completer();
-  Position? position;
+  FirebaseService service = FirebaseService();
+  ResultState state = ResultState.Initial;
+  Set<Circle> circles = {};
+  double latitude = 0;
+  double longitude = 0;
+  bool isShow = false;
+  FeedModel? feedModel;
 
-  Set<Circle> getCircles(){
-    return {Circle(
-      circleId: const CircleId(""),
-      center: LatLng(position?.latitude??0, position?.longitude??0),
-      radius: 4000,
-    )};
+  void showIncidentDialog(FeedModel feedModel) {
+    isShow = !isShow;
+    this.feedModel = feedModel;
+    notifyListeners();
   }
 
-  CameraPosition initialLocation() {
-    return CameraPosition(
-      target: LatLng(position?.latitude ?? 37.42796133580664,
-          position?.longitude ?? -122.085749655962),
-      zoom: 14.4746,
-    );
+  Future<void> setLocation(double latitude, double longitude) async {
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 
   Future<void> _goToMyLocation() async {
     var position = await _determinePosition();
-    this.position = position;
-    notifyListeners();
     final GoogleMapController controller = await this.controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position.latitude, position.longitude),
-        zoom: 14.4746,)));
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 16.4746,
+    )));
   }
 
   MapsViewModel() {
-    _goToMyLocation();
+    if (latitude == 0 && longitude == 0) {
+      _goToMyLocation();
+    }
   }
 
   Future<Position> _determinePosition() async {

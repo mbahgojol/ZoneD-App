@@ -9,7 +9,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeViewModel>(
       builder: (context, viewModel, _) {
-        return viewModel.service.getFeedsRealtime();
+        return viewModel.service
+            .getFeedsRealtime((snapshot) => viewModel.showList(snapshot));
       },
     );
   }

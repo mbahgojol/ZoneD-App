@@ -79,7 +79,6 @@ class CreateFeedsViewModel with ChangeNotifier {
   Future<void> getMyLocation() async {
     var position = await _determinePosition();
     this.position = position;
-    debugPrint("long ${position.longitude}");
   }
 
   Future<Position> _determinePosition() async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zoned/data/model/FeedModel.dart';
 import 'package:zoned/ui/main/main_viewmodel.dart';
+import 'package:zoned/ui/map/maps_viewmodel.dart';
 
 class ItemView extends StatelessWidget {
   const ItemView({Key? key, required this.model}) : super(key: key);
@@ -42,6 +43,8 @@ class ItemView extends StatelessWidget {
                 child: const Icon(Icons.directions),
                 onTap: () {
                   context.read<MainViewModel>().onItemTapped(1);
+                  context.read<MapsViewModel>().setLocation(
+                      double.parse(model.lat), double.parse(model.long));
                 },
               )
             ],
